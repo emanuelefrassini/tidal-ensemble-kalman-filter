@@ -106,6 +106,12 @@ figures/            Saved experiment figures
 results.json        Experiment metrics in machine-readable form
 ```
 
+## MATLAB coursework experiments
+
+The [`matlab/`](matlab/) folder preserves two MATLAB files from the original course project: an experimental Ensemble Kalman Filter and an alternative stochastic-boundary timestep. They are provided for historical and methodological context, **not as a validated standalone MATLAB package**. The tested Python implementation and the numerical results shown above remain unchanged.
+
+The MATLAB experiment assimilates observations at Bath, whereas the Python experiment deliberately withholds Bath for independent evaluation. Their noise representations and numerical settings also differ; their outputs should not be assumed equivalent. See the [MATLAB notes](matlab/README.md) for details and dependencies.
+
 ## Scope and limitations
 
 The model is deliberately idealised: one spatial dimension, fixed water depth, simplified geometry and boundary conditions. Boundary and measurement uncertainty settings are exploratory values rather than calibrated estimates for this storm. Three assimilated stations and one spatial holdout provide a useful demonstration, but broader validation would require other periods and stations. Analysis accuracy and free-forecast accuracy should be interpreted separately. The convergence experiment uses only three random seeds per ensemble size.

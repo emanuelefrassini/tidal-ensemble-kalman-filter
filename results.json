@@ -1,0 +1,102 @@
+{
+  "validation": "exploratory numerical experiments; see README for scope and limitations",
+  "configuration": {
+    "seed": 2026,
+    "ensemble_size": 100,
+    "hours_excluded_from_metrics": 6.0,
+    "model_length_m": 100000.0,
+    "model_depth_m": 20.0,
+    "wave_speed_m_s": 14.007141035914502,
+    "boundary_AR1_alpha": 0.9726044771163483,
+    "boundary_AR1_innovation_sd_m": 0.0464932386883231,
+    "assimilation_stations": [
+      "vlissingen",
+      "terneuzen",
+      "hansweert"
+    ],
+    "held_out_station": "bath"
+  },
+  "astronomical_tide_baseline": {
+    "rmse_m": {
+      "vlissingen": 0.38337259111261085,
+      "terneuzen": 0.5939821065577744,
+      "hansweert": 0.590269314806423,
+      "bath": 0.399198647342036
+    },
+    "bias_m": {
+      "vlissingen": -0.02142937197352452,
+      "terneuzen": -0.11380115044312632,
+      "hansweert": -0.14577092143072395,
+      "bath": -0.2254963472421305
+    }
+  },
+  "storm_baseline_rmse_m": {
+    "vlissingen": 1.263461896346293,
+    "terneuzen": 1.4765865474639461,
+    "hansweert": 1.553608623086993,
+    "bath": 1.5296557659533128
+  },
+  "storm_enkf_analysis_rmse_m": {
+    "vlissingen": 0.1406059836653672,
+    "terneuzen": 0.2009367585917972,
+    "hansweert": 0.24278962944767013,
+    "bath": 0.3592328150625148
+  },
+  "storm_enkf_prior_rmse_m": {
+    "vlissingen": 0.19704470229948337,
+    "terneuzen": 0.23786755830412412,
+    "hansweert": 0.2702224858026241,
+    "bath": 0.36569609616264787
+  },
+  "identical_twin_baseline_rmse_m": {
+    "vlissingen": 0.17760404309426922,
+    "terneuzen": 0.1784550988698973,
+    "hansweert": 0.18466421568207117,
+    "bath": 0.19162815250953552
+  },
+  "identical_twin_enkf_rmse_m": {
+    "vlissingen": 0.06486257442565682,
+    "terneuzen": 0.04115328402323256,
+    "hansweert": 0.03523592677942051,
+    "bath": 0.04404188924246061
+  },
+  "identical_twin_convergence": [
+    {
+      "ensemble_size": 20,
+      "holdout_rmse_m_mean": 0.05146665194364639,
+      "holdout_rmse_m_std": 0.001299902587502268,
+      "n_repeats": 3
+    },
+    {
+      "ensemble_size": 50,
+      "holdout_rmse_m_mean": 0.04454989674773157,
+      "holdout_rmse_m_std": 0.0018895145434465726,
+      "n_repeats": 3
+    },
+    {
+      "ensemble_size": 100,
+      "holdout_rmse_m_mean": 0.04320851948139972,
+      "holdout_rmse_m_std": 0.0008295877167463406,
+      "n_repeats": 3
+    },
+    {
+      "ensemble_size": 200,
+      "holdout_rmse_m_mean": 0.042122703274049544,
+      "holdout_rmse_m_std": 0.00021652286718642724,
+      "n_repeats": 3
+    }
+  ],
+  "eight_hour_free_forecasts": [
+    {
+      "cutoff_hour": 20,
+      "horizon_hours": 8,
+      "bath_forecast_rmse_m": 2.0176663359751887
+    },
+    {
+      "cutoff_hour": 24,
+      "horizon_hours": 8,
+      "bath_forecast_rmse_m": 0.6158347587944116
+    }
+  ],
+  "warning": "Assimilated-station analysis errors are in-sample; Bath is withheld. No parameter tuning used Bath."
+}

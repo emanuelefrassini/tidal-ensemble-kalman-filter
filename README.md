@@ -1,6 +1,6 @@
 # Ensemble Kalman Filter for Tidal-Wave Data Assimilation
 
-**Python implementation of a tidal-wave data assimilation project originally developed in MATLAB during the MSc Applied Mathematics programme at TU Delft.**
+**Tidal-wave data assimilation in Python, with [original MATLAB coursework experiments](matlab/) from the MSc Applied Mathematics programme at TU Delft.**
 
 This project models water-level propagation in an idealised one-dimensional estuary and applies an **Ensemble Kalman Filter (EnKF)** to combine a physical model with sparse water-level observations. Experiments use data from the **Western Scheldt (Netherlands)** during 5–7 December 2013, including storm Xaver.
 
@@ -103,6 +103,7 @@ experiments/
 tests/              Automated unit and numerical tests
 data/               Tide-gauge observations and data provenance
 figures/            Saved experiment figures
+matlab/              Original MATLAB EnKF and wave-model experiments
 results.json        Experiment metrics in machine-readable form
 ```
 

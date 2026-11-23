@@ -32,6 +32,38 @@ At the held-out Bath station, the EnKF reduces the water-level **analysis** RMSE
 
 These results illustrate that accurate state estimation does not automatically imply accurate long-range prediction when forcing and model geometry are simplified. See `figures/06_free_forecast.png` for the corresponding traces.
 
+### Extended validation: rolling-origin forecasts
+
+To evaluate free-forecast performance more systematically, a separate
+[rolling-origin experiment](validation/README.md) evaluates nine eight-hour
+forecasts starting at +8, +12, ..., +40 hours. Bath remains withheld from
+the assimilation updates, and no new measurements are assimilated after
+each forecast cutoff.
+
+| Filter seed | EnKF forecast RMSE (m) | Baseline RMSE (m) | RMSE reduction |
+|---|---:|---:|---:|
+| 2026 | 1.123 | 1.641 | 31.5% |
+| 2027 | 1.128 | 1.641 | 31.3% |
+| 2028 | 1.115 | 1.641 | 32.1% |
+
+The errors are pooled across forecast origins, excluding observations at
+the cutoff itself. The EnKF shows approximately 32% lower RMSE in this
+experiment. Future astronomical tide is treated as known forcing, while
+future stochastic boundary innovations have zero conditional mean.
+
+These findings are exploratory: forecast windows overlap, the observations
+cover one storm event, and changing the filter seed does not constitute
+independent environmental validation.
+
+Reproduce the study with:
+
+```bash
+python -m experiments.rolling_forecasts --repeats 3
+```
+
+The experiment writes its detailed results to
+`validation/results/rolling_forecasts.json`.
+
 An identical-twin experiment and repeated-seed sensitivity study also assess the effect of **ensemble size (20, 50, 100, 200)**. The experiments use three filter seeds per ensemble size and should be treated as exploratory rather than as a measured asymptotic rate of convergence.
 
 ![Held-out RMSE in an identical-twin experiment for different ensemble sizes](figures/05_convergence.png)

@@ -1,4 +1,4 @@
-# Ensemble Kalman Filter for Tidal-Wave Data Assimilation
+# Ensemble Kalman Filter for Tidal Wave Data Assimilation
 
 **Tidal wave data assimilation in Python, with [original MATLAB coursework experiments](matlab/) from the MSc Applied Mathematics at TU Delft.**
 

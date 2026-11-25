@@ -1,12 +1,12 @@
 # Ensemble Kalman Filter for Tidal-Wave Data Assimilation
 
-**Tidal-wave data assimilation in Python, with [original MATLAB coursework experiments](matlab/) from the MSc Applied Mathematics programme at TU Delft.**
+**Tidal wave data assimilation in Python, with [original MATLAB coursework experiments](matlab/) from the MSc Applied Mathematics at TU Delft.**
 
-This project models water-level propagation in an idealised one-dimensional estuary and applies an **Ensemble Kalman Filter (EnKF)** to combine a physical model with sparse water-level observations. Experiments use data from the **Western Scheldt (Netherlands)** during 5–7 December 2013, including storm Xaver.
+This project models propagation of water in an idealised one-dimensional estuary and applies an **Ensemble Kalman Filter (EnKF)** to combine a physical model with sparse observations. Experiments use data from the **Western Scheldt (Netherlands)** during 5–7 December 2013, including storm Xaver.
 
-The code implements a staggered-grid shallow-water solver, temporally correlated stochastic boundary forcing, an augmented-state EnKF, a synthetic identical-twin experiment, an ensemble-size study, and tests on real observations.
+The code implements a grid solver, temporally correlated stochastic boundary forcing, an augmented state EnKF, a synthetic identical twin experiment, an ensemble size study, and tests on real observations.
 
-![Tidal-wave data assimilation at four monitoring stations; Bath is withheld from analysis updates](figures/02_storm_assimilation_holdout.png)
+![Tidal wave data assimilation at four monitoring stations](figures/02_storm_assimilation_holdout.png)
 
 ## Key results
 
@@ -19,22 +19,22 @@ Using an ensemble of **100 members** (seed `2026`), the filter assimilates water
 | Hansweert | 1.554 | 0.243 | Assimilated |
 | **Bath** | **1.530** | **0.359** | **Held out** |
 
-At the held-out Bath station, the EnKF reduces the water-level **analysis** RMSE by approximately **76.5%** compared with the deterministic baseline. This measures performance at an unassimilated location *while observations from the other stations continue to be incorporated*; it is not an eight-hour forecast score.
+At the held out Bath station, the EnKF reduces the water-level **analysis** RMSE by approximately **76.5%** compared with the deterministic baseline. This measures performance at an unassimilated location *while observations from the other stations continue to be incorporated*.
 
 ![Model and EnKF analysis RMSE at the four stations](figures/03_rmse_comparison.png)
 
-**Free forecasts are harder.** In separate tests with *no new measurements after the cutoff*, eight-hour forecasts at Bath have the following RMSE:
+**Free forecasts are harder.** In separate tests with *no new measurements after the cutoff*, eight hour forecasts at Bath have the following RMSE:
 
 | Last assimilation time (relative to 5 Dec 2013 00:00 UTC) | Eight-hour RMSE at Bath (m) |
 |:---|---:|
 | +20 hours | 2.018 |
 | +24 hours | 0.616 |
 
-These results illustrate that accurate state estimation does not automatically imply accurate long-range prediction when forcing and model geometry are simplified. See `figures/06_free_forecast.png` for the corresponding traces.
+These results illustrate that accurate state estimation does not automatically imply accurate long range prediction when forcing and model geometry are simplified. See `figures/06_free_forecast.png` for the corresponding traces.
 
 ### Extended validation: rolling-origin forecasts
 
-To evaluate free-forecast performance more systematically, a separate
+To evaluate the forecast performance more systematically, a separate
 [rolling-origin experiment](validation/README.md) evaluates nine eight-hour
 forecasts starting at +8, +12, ..., +40 hours. Bath remains withheld from
 the assimilation updates, and no new measurements are assimilated after
@@ -46,12 +46,12 @@ each forecast cutoff.
 | 2027 | 1.128 | 1.641 | 31.3% |
 | 2028 | 1.115 | 1.641 | 32.1% |
 
-The errors are pooled across forecast origins, excluding observations at
+The errors are pooled across the forecast origins, excluding observations at
 the cutoff itself. The EnKF shows approximately 32% lower RMSE in this
 experiment. Future astronomical tide is treated as known forcing, while
 future stochastic boundary innovations have zero conditional mean.
 
-These findings are exploratory: forecast windows overlap, the observations
+These findings are exploratory. The forecast windows overlap, the observations
 cover one storm event, and changing the filter seed does not constitute
 independent environmental validation.
 
@@ -96,7 +96,7 @@ $$
 \sigma_w=\sigma_\eta\sqrt{1-\alpha^2},
 $$
 
-with $T=6$ hours and stationary standard deviation $\sigma_\eta=0.2$ m. The filter includes the boundary-error variable $\eta$ in its state, preserving a Markov representation of the correlated forcing.
+with $T=6$ hours and stationary standard deviation $\sigma_\eta=0.2$ m. The filter includes the boundary error variable $\eta$ in its state, preserving a Markov representation of the correlated forcing.
 
 At each step, the **stochastic EnKF** propagates ensemble members, estimates sample covariances, computes the gain $K=P_{xy}(P_{yy}+R)^{-1}$, and performs perturbed-observation updates. The default observation-noise standard deviation is **0.12 m**. The code separately records estimates before observation updates (*forecast/prior*) and after updates (*analysis/posterior*).
 
@@ -141,18 +141,18 @@ results.json        Experiment metrics in machine-readable form
 
 ## MATLAB coursework experiments
 
-The [`matlab/`](matlab/) folder preserves two MATLAB files from the original course project: an experimental Ensemble Kalman Filter and an alternative stochastic-boundary timestep. They are provided for historical and methodological context, **not as a validated standalone MATLAB package**. The tested Python implementation and the numerical results shown above remain unchanged.
+The [`matlab/`](matlab/) folder preserves two MATLAB files from the original course project: an experimental Ensemble Kalman Filter and an alternative stochastic-boundary timestep. The tested Python implementation and the numerical results shown above remain unchanged.
 
-The MATLAB experiment assimilates observations at Bath, whereas the Python experiment deliberately withholds Bath for independent evaluation. Their noise representations and numerical settings also differ; their outputs should not be assumed equivalent. See the [MATLAB notes](matlab/README.md) for details and dependencies.
+The MATLAB experiment assimilates observations at Bath, whereas the Python experiment deliberately withholds Bath for independent evaluation. Their noise representations and numerical settings also differ and so their outputs should not be assumed equivalent. See the [MATLAB notes](matlab/README.md) for details and dependencies.
 
 ## Scope and limitations
 
-The model is deliberately idealised: one spatial dimension, fixed water depth, simplified geometry and boundary conditions. Boundary and measurement uncertainty settings are exploratory values rather than calibrated estimates for this storm. Three assimilated stations and one spatial holdout provide a useful demonstration, but broader validation would require other periods and stations. Analysis accuracy and free-forecast accuracy should be interpreted separately. The convergence experiment uses only three random seeds per ensemble size.
+The model is deliberately idealised: one spatial dimension, fixed water depth, simplified geometry and boundary conditions. Boundary and measurement uncertainty settings are exploratory values rather than calibrated estimates for this storm. Three assimilated stations and one spatial holdout provide a useful demonstration, but broader validation would require other periods and stations. The convergence experiment uses only three random seeds per ensemble size.
 
 ## Project context and data credits
 
-The work originated as a MATLAB project for **WI4475 Data Assimilation** in the MSc Applied Mathematics programme at **Delft University of Technology (TU Delft)**, based on the course assignment *Tidal wave* by **Martin Verlaan and Arnold Heemink** (2022). This repository presents the numerical modelling, filtering and evaluation in Python.
+The work originated as a MATLAB project for **WI4475 Data Assimilation** in the MSc Applied Mathematics programme at **Delft University of Technology (TU Delft)**, based on the course assignment. This repository presents the numerical modelling, filtering and evaluation in Python.
 
 The observation series were distributed for the course and identify **MATROOS** as the series database. The underlying Dutch water-level observations are attributed to **Rijkswaterstaat**. Public Rijkswaterstaat Waterinfo data are listed as public-domain/CC0; see the [official dataset catalogue](https://data.overheid.nl/dataset/9442-waterinfo-rijkswateren) and [Waterinfo reuse terms](https://waterinfo-extra.rws.nl/monitoring/gebruik-data/). See [`data/README.md`](data/README.md) for information about the specific extracts in this repository.
 
-This repository does not include university assignment handouts or course-provided simulation source code. The code, figures and metrics in this repository describe the **Python experiments reported here**.
+The code, figures and metrics in this repository describe the **Python experiments reported here**.
